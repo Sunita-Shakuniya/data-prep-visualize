@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'DataCleaning/style.css' %}">
-    <script src="{% static 'DataCleaning/script.js' %}"></script>
+    
 </head>
 <body>
    <!-- <h1>Hello</h1>
@@ -32,7 +32,15 @@
                 <button type="button" class="upload-button"> Upload </button>
             </div>
         </form>
+        <div id="buttons-container" style="display: none;">
+            <a href="{% url 'data_cleaning' %}">
+                <button>Data Cleaning</button>
+            </a>
+            <a href="{% url 'data_visualization' %}">
+                <button>Data Visualization</button>
+            </a>
+        </div>
 
-
+    <script src="{% static 'DataCleaning/script.js' %}"></script>
 </body>
 </html>

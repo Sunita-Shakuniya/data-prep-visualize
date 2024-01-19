@@ -35,28 +35,71 @@ var isAdvancedUpload = function() {
       progressBar.style.width = 0;
       fileFlag = 0;
   });
-  
+
+// start of upload file functino
   uploadButton.addEventListener("click", () => {
-      let isFileUploaded = fileInput.value;
-      if(isFileUploaded != '') {
-          if (fileFlag == 0) {
-              fileFlag = 1;
-              var width = 0;
-              var id = setInterval(frame, 50);
-              function frame() {
-                    if (width >= 390) {
-                      clearInterval(id);
-                      uploadButton.innerHTML = `<span class="material-icons-outlined upload-button-icon"> check_circle </span> Uploaded`;
-                    } else {
-                      width += 5;
-                      progressBar.style.width = width + "px";
-                    }
-              }
+    let isFileUploaded = fileInput.value;
+    if (isFileUploaded !== '') {
+        if (fileFlag === 0) {
+            fileFlag = 1;
+            var width = 0;
+            var id = setInterval(frame, 50);
+
+            function frame() {
+                if (width >= 390) {
+                    clearInterval(id);
+                    uploadButton.innerHTML = `<span class="material-icons-outlined upload-button-icon"> check_circle </span> Uploaded`;
+                    // Show the buttons after successful upload
+                    document.getElementById('buttons-container').style.display = 'block';
+                    // Send the file to the server using AJAX
+                    let formData = new FormData();
+                    formData.append('file', fileInput.files[0]);
+
+                    fetch('/handle_uploaded_file/', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'), // Replace with the actual cookie name used for CSRF
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the server response if needed
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                } else {
+                    width += 5;
+                    progressBar.style.width = width + "px";
+                }
             }
-      } else {
-          cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
-      }
-  });
+        }
+    } else {
+        cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
+    }
+});
+
+// Function to get CSRF token from cookies
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Check if the cookie name matches the expected format
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+//end upload file function
+
   
   cancelAlertButton.addEventListener("click", () => {
       cannotUploadMessage.style.cssText = "display: none;";
@@ -105,3 +148,4 @@ var isAdvancedUpload = function() {
       document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
       uploadButton.innerHTML = `Upload`;
   });
+
