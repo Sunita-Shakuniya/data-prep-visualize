@@ -70,6 +70,7 @@ var isAdvancedUpload = function() {
                     .catch(error => {
                         console.error('Error:', error);
                     });
+                    
                 } else {
                     width += 5;
                     progressBar.style.width = width + "px";
@@ -148,4 +149,6 @@ function getCookie(name) {
       document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
       uploadButton.innerHTML = `Upload`;
   });
+ 
+
 

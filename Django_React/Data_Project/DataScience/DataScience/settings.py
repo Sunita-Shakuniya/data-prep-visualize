@@ -114,5 +114,18 @@ STATIC_ROOT = BASE_DIR / "DataCleaning/static" # added
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Added to save the excel file
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+#for loading next 100 rows
+# settings.py
+
+# Choose an appropriate session engine (e.g., django.contrib.sessions.backends.db)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# Set a unique secret key for your project
+SECRET_KEY = 'your_secret_key'
+
+# Set the session expiry time (in seconds)
+SESSION_COOKIE_AGE = 60  # agae limit to one page reload

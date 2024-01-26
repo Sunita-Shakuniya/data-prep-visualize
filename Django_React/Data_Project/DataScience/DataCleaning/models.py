@@ -1,3 +1,7 @@
+# models.py
 from django.db import models
 
-# Create your models here.
+class UploadedFile(models.Model):
+    file = models.FileField(upload_to='uploads/')
+    metadata = models.JSONField(null=True, blank=True)
+

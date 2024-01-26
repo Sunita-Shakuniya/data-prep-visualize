@@ -9,19 +9,14 @@
     
 </head>
 <body>
-   <!-- <h1>Hello</h1>
-    <label for="avatar">Choose a profile picture:</label>
-
-<input type="file" id="avatar" name="avatar" accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />-->
-
-    <!--logo of upload container-->
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
         <form class="form-container" enctype='multipart/form-data'>
+            {% csrf_token %}
             <div class="upload-files-container">
                 <div class="drag-file-area">
                     <span class="material-icons-outlined upload-icon"> file_upload </span>
                     <h3 class="dynamic-message"> Drag & drop any file here </h3>
-                    <label class="label"> or <span class="browse-files"> <input type="file" class="default-file-input" accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet/> <span class="browse-files-text">browse file</span> <span>from device</span> </span> </label>
+                    <label class="label"> or <span class="browse-files"> <input type="file" class="default-file-input" accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, text/csv"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span> </label>
                 </div>
                 <span class="cannot-upload-message"> <span class="material-icons-outlined">error</span> Please select a file first <span class="material-icons-outlined cancel-alert-button">cancel</span> </span>
                 <div class="file-block">
@@ -33,14 +28,15 @@
             </div>
         </form>
         <div id="buttons-container" style="display: none;">
-            <a href="{% url 'data_cleaning' %}">
-                <button>Data Cleaning</button>
-            </a>
+            <form method="post" action="{% url 'data_cleaning' %}?file_path={{ file_path }}">
+                {% csrf_token %}
+                <button type="submit">Data Cleaning</button>
+            </form>
             <a href="{% url 'data_visualization' %}">
                 <button>Data Visualization</button>
             </a>
         </div>
-
+        
     <script src="{% static 'DataCleaning/script.js' %}"></script>
 </body>
 </html>
