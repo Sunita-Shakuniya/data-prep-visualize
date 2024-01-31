@@ -34,6 +34,24 @@
             </table>
         </div>
         <button id="reloadButton">Reload</button>
+        <!-- Inside your form in the template -->
+        <form method="post" action="{% url 'perform_operation' %}">
+            {% csrf_token %}
+
+            <label for="id_operation">Operation:</label>
+            {{ operation_form.operation }}
+            
+            <label for="id_column_name">Columns to Delete:</label>
+            {% for column in operation_form.column_name %}
+                <label>
+                    <input type="checkbox" name="{{ operation_form.column_name.name }}" value="{{ column }}">
+                    {{ column }}
+                </label>
+            {% endfor %}
+            
+            <button type="submit">Perform Operation</button>
+        </form>
+
     {% else %}
         <p>No data available.</p>
     {% endif %}

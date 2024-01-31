@@ -128,4 +128,4 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SECRET_KEY = 'your_secret_key'
 
 # Set the session expiry time (in seconds)
-SESSION_COOKIE_AGE = 60  # agae limit to one page reload
+SESSION_COOKIE_AGE = 8000  # agae limit to one page reload

@@ -10,8 +10,9 @@ urlpatterns = [
     path('handle_uploaded_file/', views.handle_uploaded_file, name='handle_uploaded_file'),
     path('data_cleaning/', views.data_cleaning, name='data_cleaning'),
     path('data_visualization/', views.data_visualization, name='data_visualization'),
-    path('data_processing/', views.data_processing, name='data_processing'),
     path('reload_data/', views.reload_data, name='reload_data'),
+    path('perform_operation/', views.perform_operation, name='perform_operation'),
+    
 
 ]
 
