@@ -8,7 +8,15 @@ class UploadFileForm(forms.ModelForm):
         fields = ['file', 'metadata']
 
 class OperationForm(forms.Form):
-    operation = forms.CharField()
+    operation = forms.ChoiceField(
+        choices=[
+            ('', '---------'),  # Add an empty option as the default
+            ('delete_column', 'Delete Column'),
+            ('punctuation', 'Punctuation'),  # Add punctuation option
+            # ... other choices ...
+        ],
+        required=True,
+    )
     column_name = forms.MultipleChoiceField(choices=[], widget=forms.CheckboxSelectMultiple, required=False)
 
     def __init__(self, *args, available_columns=None, **kwargs):
