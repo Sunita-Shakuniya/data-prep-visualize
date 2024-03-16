@@ -1,11 +1,51 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Display</title>
+    <link rel="stylesheet" href="{% static 'DataCleaning/style.css' %}">
+    <link rel="stylesheet" href="{% static 'DataCleaning/style1.css' %}">
 </head>
 <body>
+        <form  enctype='multipart/form-data'>
+            {% csrf_token %}
+            <div class="upload-files-container">
+                <div class="drag-file-area">
+                    <label for="file-upload" class="button">
+                        
+                        <span class="button__text">Upload File</span>
+                        <span class="button__icon">
+                        <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="12" x2="12" y1="5" y2="19"></line>
+                        <line x1="5" x2="19" y1="12" y2="12"></line>
+                        </svg>
+                        </span>
+                        <span class="browse-files"> 
+                            <input type="file"  id="file-upload"   class="default-file-input" accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, text/csv" style="display: none;"/> 
+                            <span class="browse-files-text"></span>
+                    </label>
+                </div>
+                <div class="file-block">
+                    <div class="file-info"> <span class="material-icons-outlined file-icon">description</span> <span class="file-name"> </span> | <span class="file-size">  </span> </div>
+                    <span class="material-icons remove-file-icon">delete</span>
+                    <div class="progress-bar"> </div>
+                </div>
+                <button type="button" class="upload-button"> Upload </button>
+            </div>
+        </form>      
+     <!--Visualization and cleaning button--> 
+    <div id="buttons-container" style="display: none;">
+            <form method="post" action="{% url 'data_cleaning' %}?file_path={{ file_path }}">
+                {% csrf_token %}
+                <button type="submit">Data Cleaning</button>
+            </form>
+            <a href="{% url 'data_visualization' %}">
+                <button>Data Visualization</button>
+            </a>
+        </div>
+        
     <h1>Data Display</h1>
 
     {% if data_list %}
@@ -48,62 +88,13 @@
             </select>
             <button type="submit">Perform Operation</button>
         </form>
-        
-        
-        
-        
-        
 
+        <a href="{% url 'data_visualization' %}">
+            <button>Data Visualization</button>
+        </a>                                     
     {% else %}
         <p>No data available.</p>
     {% endif %}
-    <script>
-        // Add this script to handle the button click event
-        document.getElementById('reloadButton').addEventListener('click', function() {
-          // Use JavaScript to make an asynchronous request to the reload_data view
-          fetch('/reload_data/')
-            .then(response => {
-              if (response.ok) {
-                // Reload the page if the request is successful
-                location.reload();
-              } else {
-                console.error('Failed to reload data');
-              }
-            })
-            .catch(error => {
-              console.error('Error during reload:', error);
-            });
-        });
-
-
-
-        function scrollToBottom() {
-        // Get the reference to the scrollable div
-        const scrollableDiv = document.getElementById('scrollableDiv');
-
-        // Set scrollTop to scrollHeight to initially scroll to the bottom
-        scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
-        }
-
-        // Call scrollToBottom when the page loads or when content changes
-        window.onload = scrollToBottom;
-
-        // Attach scrollToBottom to the click event of the reload button
-        const reloadButton = document.getElementById('reloadButton');
-        reloadButton.addEventListener('click', function () {
-            // Assuming you have a function to reload data, replace loadData() with your actual function
-            loadData();
-
-            // After reloading data, scroll to the bottom
-            scrollToBottom();
-        });
-
-        // Example function to simulate loading data
-        function loadData() {
-            // Replace this with your actual logic to load more data
-            // For example, you might use AJAX, Fetch API, etc.
-            console.log('Loading data...');
-        }
-      </script>
+    <script src="{% static 'DataCleaning/script.js' %}"></script>
 </body>
 </html>

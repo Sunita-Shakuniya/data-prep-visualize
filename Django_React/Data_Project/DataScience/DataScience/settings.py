@@ -106,7 +106,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "DataCleaning/static" # added
 
 # Default primary key field type
@@ -128,4 +128,4 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SECRET_KEY = 'your_secret_key'
 
 # Set the session expiry time (in seconds)
-SESSION_COOKIE_AGE = 8000  # agae limit to one page reload
+SESSION_COOKIE_AGE = 80  # agae limit to one page reload

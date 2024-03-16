@@ -1,4 +1,5 @@
 import pandas as pd
+import plotly.express as px
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.files.storage import default_storage
@@ -125,4 +126,17 @@ def perform_operation(request):
 # Visualization part
 def data_visualization(request):
     # Add your logic for the data visualization page
-    return render(request, 'DataCleaning/data_visualization.html')
+    file_path = request.session.get('file_path', None)
+
+    if file_path and file_path.endswith('.csv'):
+        # Load CSV data into a DataFrame
+        data = pd.read_csv(file_path)
+
+        # Create a scatter plot using Plotly
+        fig = px.scatter(data, x='table', y='depth', title='Scatter Plot')
+
+        # Convert Plotly figure to HTML
+        plot_html = fig.to_html(full_html=False)
+        return render(request, 'DataCleaning/data_visualization.html', {'plot_html': plot_html})
+    else:
+        return render(request, 'error.html', {'error_message': 'Invalid file path or format'})

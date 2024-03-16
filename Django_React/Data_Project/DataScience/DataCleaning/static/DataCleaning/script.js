@@ -34,6 +34,7 @@ var isAdvancedUpload = function() {
       uploadedFile.style.cssText = "display: flex;";
       progressBar.style.width = 0;
       fileFlag = 0;
+      
   });
 
 // start of upload file functino

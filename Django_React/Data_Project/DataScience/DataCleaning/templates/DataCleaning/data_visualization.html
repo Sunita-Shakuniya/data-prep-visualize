@@ -1,13 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Data Visualization</title>
+    <link rel="stylesheet" href="{% static 'DataCleaning/style.css' %}">
+    <link rel="stylesheet" href="{% static 'DataCleaning/style1.css' %}">
+    <!-- Include Plotly's JavaScript and CSS -->
+    {{ plot_html | safe }}
 </head>
-<body>
+<body>  
+        <form class="form">
+            {% csrf_token %}
+            <div class="file-upload-wrapper" data-text="Select your file!">
+            <input name="file-upload-field" type="file" class="file-upload-field" value="">
+            </div>
+        </form>        
+    <div id="buttons-container" style="display: none;">
+        <form method="post" action="{% url 'data_cleaning' %}?file_path={{ file_path }}">
+            {% csrf_token %}
+            <button type="submit">Data Cleaning</button>
+        </form>
+        <a href="{% url 'data_visualization' %}">
+            <button>Data Visualization</button>
+        </a>
+    </div>
+    
     <h1>
-        hello Visualization...
+        <div id="plotly-chart"></div>
     </h1>
+    <script src="{% static 'DataCleaning/script.js' %}"></script>
+    <script src="{% static 'DataCleaning/script1.js' %}"></script>
 </body>
 </html>
