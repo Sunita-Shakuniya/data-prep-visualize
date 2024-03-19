@@ -5,32 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualization</title>
-    <link rel="stylesheet" href="{% static 'DataCleaning/style.css' %}">
     <link rel="stylesheet" href="{% static 'DataCleaning/style1.css' %}">
     <!-- Include Plotly's JavaScript and CSS -->
-    {{ plot_html | safe }}
+    {{ plot_html|safe }}
 </head>
 <body>  
-        <form class="form">
-            {% csrf_token %}
-            <div class="file-upload-wrapper" data-text="Select your file!">
-            <input name="file-upload-field" type="file" class="file-upload-field" value="">
-            </div>
-        </form>        
-    <div id="buttons-container" style="display: none;">
-        <form method="post" action="{% url 'data_cleaning' %}?file_path={{ file_path }}">
-            {% csrf_token %}
-            <button type="submit">Data Cleaning</button>
-        </form>
-        <a href="{% url 'data_visualization' %}">
-            <button>Data Visualization</button>
-        </a>
-    </div>
-    
+    <!--Back to home page-->
+    <a href="{% url 'index' %}">
+        <label for="file-upload" class="button">
+            <span class="button__text">New</span>
+            <span class="button__icon">
+                <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="12" x2="12" y1="5" y2="19"></line>
+                    <line x1="5" x2="19" y1="12" y2="12"></line>
+                </svg>
+            </span>    
+        </label>
+    </a>
+        
     <h1>
         <div id="plotly-chart"></div>
     </h1>
-    <script src="{% static 'DataCleaning/script.js' %}"></script>
-    <script src="{% static 'DataCleaning/script1.js' %}"></script>
+    {% for plot_html in visualizations %}
+        <div>{{ plot_html|safe }}</div>
+    {% endfor %}
+
 </body>
 </html>

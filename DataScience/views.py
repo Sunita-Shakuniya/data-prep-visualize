@@ -162,10 +162,13 @@ def data_visualization(request):
         # Loop through each combination and create a visualization for each
         visualizations = []
         for combination in all_combinations:
+            print(f"Generating plot for combination: {combination}")  # Debug statement
+            
             # Create a scatter plot using Plotly for the current combination
             fig = px.scatter(data, x=combination[0], y=combination[1], title=f'Scatter Plot: {", ".join(combination)}')
-        # Convert Plotly figure to HTML
-        plot_html = fig.to_html(full_html=False)
-        return render(request, 'DataCleaning/data_visualization.html', {'plot_html': plot_html})
+            # Convert Plotly figure to HTML
+            plot_html = fig.to_html(full_html=False)
+            visualizations.append(plot_html)
+        return render(request, 'DataCleaning/data_visualization.html', {'visualizations': visualizations})
     else:
         return render(request, 'error.html', {'error_message': 'Invalid file path or format'})
