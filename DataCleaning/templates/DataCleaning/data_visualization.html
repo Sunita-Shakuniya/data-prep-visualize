@@ -8,9 +8,40 @@
     <link rel="stylesheet" href="{% static 'DataCleaning/style1.css' %}">
     <!-- Include Plotly's JavaScript and CSS -->
     {{ plot_html|safe }}
+    <style>
+        /* Custom styling for the cards */
+        .card {
+            width: 45%; /* Adjust the width as needed */
+            margin: 10px; /* Adjust the margin between cards */
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: inline-block; /* Display cards inline */
+            vertical-align: top; /* Align cards to the top */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+
+        @media screen and (max-width: 768px) {
+            /* Adjust the width of cards for smaller screens */
+            .card {
+                width: 100%;
+            }
+        }
+
+        /* Styling for full-screen plot */
+        .fullscreen-plot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 9999;
+        }
+    </style>
 </head>
 <body>  
-    <!--Back to home page-->
+    <!-- Back to home page -->
     <a href="{% url 'index' %}">
         <label for="file-upload" class="button">
             <span class="button__text">New</span>
@@ -22,13 +53,97 @@
             </span>    
         </label>
     </a>
-        
-    <h1>
-        <div id="plotly-chart"></div>
-    </h1>
-    {% for plot_html in visualizations %}
-        <div>{{ plot_html|safe }}</div>
-    {% endfor %}
+
+    
+    
+    <!-- select_combination_visualization.html -->
+
+<form method="post" action="{% url 'data_visualization' %}">
+    {% csrf_token %}
+    <h2>2-Column Combinations:</h2>
+    <ul>
+        {% for combination in combinations_2 %}
+            <li>
+                <input type="checkbox" name="selected_combinations" value="{{ combination }}">
+                <label>{{ combination }}</label>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>3-Column Combinations:</h2>
+    <ul>
+        {% for combination in combinations_3 %}
+            <li>
+                <input type="checkbox" name="selected_combinations" value="{{ combination }}">
+                <label>{{ combination }}</label>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <input type="submit" value="Visualize Selected Combinations">
+</form>
+<!-- main_template.html -->
+
+
+
+    <!-- Container for the plots -->
+    <div id="plotContainer" class="plot-container">
+        {% for plot_html in visualizations %}
+            <div class="card" onclick="displayFullSize('plot{{ forloop.counter }}')">
+                {{ plot_html|safe }}
+            </div>
+            <!-- Hidden div for each plot -->
+            <div id="plot{{ forloop.counter }}" style="display: none;">
+                {{ plot_html|safe }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Container for the selected visualizations -->
+    <div id="selectedPlotContainer" class="plot-container">
+        {% for plot_html in selected_visualizations %}
+            <div class="card" onclick="displayFullSize('selectedPlot{{ forloop.counter }}')">
+                {{ plot_html|safe }}
+            </div>
+            <!-- Hidden div for each plot -->
+            <div id="selectedPlot{{ forloop.counter }}" style="display: none;">
+                {{ plot_html|safe }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- JavaScript function to display plot in full size -->
+    <script>
+        function displayFullSize(plotId) {
+            var plotHtml = document.getElementById(plotId).innerHTML;
+            // Create a new window to display the plot in full size
+            var newWindow = window.open('', '_blank');
+            newWindow.document.write('<html><head><title>Full Size Plot</title></head><body>');
+            newWindow.document.write('<div class="fullscreen-plot">');
+            newWindow.document.write(plotHtml);
+            newWindow.document.write('</div></body></html>');
+            newWindow.document.close();
+        }
+
+        // Function to handle form submission via AJAX
+        document.getElementById('visualizeButton').addEventListener('click', function() {
+            var form = document.getElementById('combinationForm');
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action, true);
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var responseData = JSON.parse(xhr.responseText);
+                    document.getElementById('combinations2List').innerHTML = responseData.combinations_2_html;
+                    document.getElementById('combinations3List').innerHTML = responseData.combinations_3_html;
+                    // Optionally, update the visualizations as well
+                    document.getElementById('plotContainer').innerHTML = responseData.visualizations_html;
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
 
 </body>
 </html>
