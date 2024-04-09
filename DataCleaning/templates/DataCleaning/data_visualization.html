@@ -5,113 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualization</title>
-    <link rel="stylesheet" href="{% static 'DataCleaning/style1.css' %}">
+    <link rel="stylesheet" href="{% static 'DataCleaning/style2.css' %}">
     <!-- Include Plotly's JavaScript and CSS -->
     {{ plot_html|safe }}
-    <style>
-        /* Custom styling for the cards */
-        .card {
-            width: 45%; /* Adjust the width as needed */
-            margin: 10px; /* Adjust the margin between cards */
-            padding: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            display: inline-block; /* Display cards inline */
-            vertical-align: top; /* Align cards to the top */
-            cursor: pointer; /* Change cursor to pointer on hover */
-        }
-
-        @media screen and (max-width: 768px) {
-            /* Adjust the width of cards for smaller screens */
-            .card {
-                width: 100%;
-            }
-        }
-
-        /* Styling for full-screen plot */
-        .fullscreen-plot {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
-            z-index: 9999;
-        }
-    </style>
 </head>
 <body>  
-    <!-- Back to home page -->
-    <a href="{% url 'index' %}">
-        <label for="file-upload" class="button">
-            <span class="button__text">New</span>
-            <span class="button__icon">
-                <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="12" x2="12" y1="5" y2="19"></line>
-                    <line x1="5" x2="19" y1="12" y2="12"></line>
-                </svg>
-            </span>    
-        </label>
-    </a>
-
-    
-    
-    <!-- select_combination_visualization.html -->
-
-<form method="post" action="{% url 'data_visualization' %}">
-    {% csrf_token %}
-    <h2>2-Column Combinations:</h2>
-    <ul>
-        {% for combination in combinations_2 %}
-            <li>
-                <input type="checkbox" name="selected_combinations" value="{{ combination }}">
-                <label>{{ combination }}</label>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <h2>3-Column Combinations:</h2>
-    <ul>
-        {% for combination in combinations_3 %}
-            <li>
-                <input type="checkbox" name="selected_combinations" value="{{ combination }}">
-                <label>{{ combination }}</label>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <input type="submit" value="Visualize Selected Combinations">
-</form>
-<!-- main_template.html -->
-
-
-
-    <!-- Container for the plots -->
-    <div id="plotContainer" class="plot-container">
-        {% for plot_html in visualizations %}
-            <div class="card" onclick="displayFullSize('plot{{ forloop.counter }}')">
-                {{ plot_html|safe }}
+    <div  class="header">
+        <!-- Back to home page -->
+        <div style="margin-right:2% ;">
+            <a href="{% url 'index' %}">
+                <label for="file-upload" class="button">
+                    <span class="button__text">New</span>
+                    <span class="button__icon">
+                        <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="12" x2="12" y1="5" y2="19"></line>
+                            <line x1="5" x2="19" y1="12" y2="12"></line>
+                        </svg>
+                    </span>    
+                </label>
+            </a>
+        </div>
+        <form method="post" action="{% url 'data_cleaning' %}?file_path={{ file_path }}">
+            {% csrf_token %}
+            <button type="submit" class="clbutton">Clean</button>
+        </form>
+    </div> 
+        <div class="plot_display">
+            <!-- select_combination_visualization.html -->
+            <div class="comcontainer">
+                <form method="post" action="{% url 'data_visualization' %}" id="combinationForm">
+                    {% csrf_token %}
+                    <div class="combination" id="combination" style="display: none;">
+                        <h4>Select Combinations</h4>
+                        <div class="combination1">
+                            <div class="combination2">
+                                <h5>2d Combinations</h5>   
+                                <ul>
+                                    {% for combination in combinations_2 %}
+                                        <li>
+                                            <input type="checkbox" name="selected_combinations" value="{{ combination }}">
+                                            <label>{{ combination|join:' vs ' }}</label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="combination2">
+                                <h5>3d Combinations</h5>
+                                <ul>
+                                    {% for combination in combinations_3 %}
+                                        <li>
+                                            <input type="checkbox" name="selected_combinations" value="{{ combination }}">
+                                            <label>{{ combination|join:' vs ' }}</label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex;">
+                    <input type="button" value="Combinations" onclick="toggleCombinations()" class="showbtn">
+                    <input type="submit" value="Visualize" id="visualizeButton" style="display: none;" class="Visualize">
+                    </div>
+                </form>
             </div>
-            <!-- Hidden div for each plot -->
-            <div id="plot{{ forloop.counter }}" style="display: none;">
-                {{ plot_html|safe }}
+            <!-- Container for the plots -->
+            <div id="plotContainer" class="plot-container">
+                {% for plot_html in visualizations %}
+                    <div class="card" onclick="displayFullSize('plot{{ forloop.counter }}')">
+                        {{ plot_html|safe }}
+                    </div>
+                    <!-- Hidden div for each plot -->
+                    <div id="plot{{ forloop.counter }}" style="display: none;">
+                        {{ plot_html|safe }}
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
 
-    <!-- Container for the selected visualizations -->
-    <div id="selectedPlotContainer" class="plot-container">
-        {% for plot_html in selected_visualizations %}
-            <div class="card" onclick="displayFullSize('selectedPlot{{ forloop.counter }}')">
-                {{ plot_html|safe }}
+            <!-- Container for the selected visualizations -->
+            <div id="selectedPlotContainer" class="plot-container">
+                {% for plot_html in selected_visualizations %}
+                    <div class="card" onclick="displayFullSize('selectedPlot{{ forloop.counter }}')">
+                        {{ plot_html|safe }}
+                    </div>
+                    <!-- Hidden div for each plot -->
+                    <div id="selectedPlot{{ forloop.counter }}" style="display: none;">
+                        {{ plot_html|safe }}
+                    </div>
+                {% endfor %}
             </div>
-            <!-- Hidden div for each plot -->
-            <div id="selectedPlot{{ forloop.counter }}" style="display: none;">
-                {{ plot_html|safe }}
-            </div>
-        {% endfor %}
-    </div>
-
+        </div>
     <!-- JavaScript function to display plot in full size -->
     <script>
         function displayFullSize(plotId) {
@@ -143,6 +125,26 @@
             };
             xhr.send(formData);
         });
+        
+    function toggleCombinations() {
+        var combinationDiv = document.getElementById("combination");
+        var visualizeButton = document.getElementById("visualizeButton");
+        var button = document.querySelector('.showbtn');
+        
+        if (combinationDiv.style.display === "none") {
+            combinationDiv.style.display = "block";
+            visualizeButton.style.display = "inline-block";        
+            button.classList.add('hideButton');
+            
+            
+        } 
+        else {
+            combinationDiv.style.display = "none";
+            visualizeButton.style.display = "none";
+        }
+    }
+
+
     </script>
 
 </body>

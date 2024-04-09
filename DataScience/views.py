@@ -5,7 +5,9 @@ from django.shortcuts import render, redirect
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from DataCleaning.forms import UploadFileForm, OperationForm
-from .utils import perform_data_operations
+from .utils.utils import perform_data_operations
+from .utils.plot_show_utils import *
+from .utils.plot_type_utils import *
 import itertools
 import random
 from django.http import JsonResponse
@@ -13,7 +15,6 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 import ast
-
 def index(request):
     return render(request, 'DataCleaning/index.html')
 
@@ -173,51 +174,6 @@ def visualize_selected_combinations(request):
     # Render the template with the context data
     return render(request, 'DataCleaning/data_visualization.html', context)
 
-def suggest_plot(combination, data):
-    if len(combination) == 2:
-        x_column, y_column = combination
-        x_dtype = data[x_column].dtype
-        print(x_dtype)
-        y_dtype = data[y_column].dtype
-        print(y_dtype)
-        # Suggest a plot based on column types
-        if x_dtype == 'int64' and y_dtype == 'int64':
-            return 'line'  # For categorical data, suggest a bar plot
-        elif x_dtype == 'int64' and y_dtype == 'category':
-            return 'bar' 
-        elif x_dtype == 'category' and y_dtype == 'category':
-            return 'bar'
-        elif x_dtype == 'object' and y_dtype == 'datetime64':
-            return 'line'
-        elif x_dtype == 'object' and y_dtype == 'object':
-            return 'bar'
-        else:
-            return 'scatter'  # For numerical data, suggest a scatter plot
-    elif len(combination) == 3:
-        x_column, y_column, z_column = combination
-        x_dtype = data[x_column].dtype
-        print(x_dtype)
-        y_dtype = data[y_column].dtype
-        print(y_dtype)
-        z_dtype = data[z_column].dtype
-        print(z_dtype)
-        # Suggest a plot based on column types
-        if x_dtype == 'int64' and y_dtype == 'int64' and z_dtype == 'int64':
-            return 'line_3d'  
-        elif x_dtype == 'int64' and (y_dtype == 'int64' or y_dtype == 'float64') and z_dtype == 'object':
-            return 'surface'  # 3d surface plot
-        elif x_dtype == 'object' and y_dtype == 'object' and z_dtype == 'int64':
-            return 'bar_3d' #3d bar plot
-        elif x_dtype == 'datetime64' and y_dtype == 'object' and z_dtype == 'object':
-            return 'line_3d'
-        elif x_dtype == 'object' and y_dtype == 'int64' and z_dtype == 'int64':
-            return 'surface'
-        else:
-            return 'scatter_3d'  # For numerical data, suggest a 3D scatter plot
-    else:
-        return 'scatter'  # Default to scatter plot if combination length is not 2 or 3
-
-
 def data_visualization(request):
     file_path = request.session.get('file_path', None)
     
@@ -247,7 +203,8 @@ def data_visualization(request):
                     if all(column in data.columns for column in combination):
                         plot_type = suggest_plot(combination, data)  # Pass combination as a single argument
                         x_column, y_column = combination
-                        fig = getattr(px, plot_type)(data, x=x_column, y=y_column, title=f'{plot_type.capitalize()} Plot: {x_column}, {y_column}')
+                        # call generate function
+                        fig = generate_2dplot(plot_type, data, x_column, y_column)
                         plot_html = fig.to_html(full_html=False)
                         selected_visualizations.append(plot_html)
                     else:
@@ -258,7 +215,7 @@ def data_visualization(request):
                     if all(column in data.columns for column in combination):
                         plot_type = suggest_plot(combination, data)  # Pass combination as a single argument
                         x_column, y_column, z_column = combination
-                        fig = getattr(px, plot_type)(data, x=x_column, y=y_column, z=z_column, title=f'{plot_type.capitalize()} Plot: {x_column}, {y_column}, {z_column}')
+                        fig = generate_3dplot(plot_type, data, x_column, y_column, z_column)
                         plot_html = fig.to_html(full_html=False)
                         selected_visualizations.append(plot_html)
                     else:
@@ -286,15 +243,15 @@ def data_visualization(request):
             visualizations = []
             for combination in combinations_2:
                 x_column, y_column = combination
-                plot_type = suggest_plot(combination, data)  # Pass combination as a single argument
-                fig = getattr(px, plot_type)(data, x=x_column, y=y_column, title=f'{plot_type.capitalize()} Plot: {x_column}, {y_column}')
+                plot_type = suggest_plot(combination, data)
+                fig = generate_2dplot(plot_type, data, x_column, y_column)
                 plot_html = fig.to_html(full_html=False)
                 visualizations.append(plot_html)
             
             for combination in combinations_3:
                 x_column, y_column, z_column = combination
-                plot_type = suggest_plot(combination, data)  # Pass combination as a single argument
-                fig = getattr(px, plot_type)(data, x=x_column, y=y_column, z=z_column, title=f'{plot_type.capitalize()} 3D Plot: {x_column}, {y_column}, {z_column}')
+                plot_type = suggest_plot(combination, data)
+                fig = generate_3dplot(plot_type, data, x_column, y_column, z_column)
                 plot_html = fig.to_html(full_html=False)
                 visualizations.append(plot_html)
             

@@ -5,23 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Display</title>
-    <link rel="stylesheet" href="{% static 'DataCleaning/style.css' %}">
     <link rel="stylesheet" href="{% static 'DataCleaning/style1.css' %}">
 </head>
 <body>
     <!--Back to home page-->
-    <a href="{% url 'index' %}">
-        <label for="file-upload" class="button">
-            <span class="button__text">New</span>
-            <span class="button__icon">
-                <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="12" x2="12" y1="5" y2="19"></line>
-                    <line x1="5" x2="19" y1="12" y2="12"></line>
-                </svg>
-            </span>    
-        </label>
-    </a>
-              
+    <div class="headerdiv">
+        <div class="headerdiv1">
+            <form method="post" action="{% url 'perform_operation' %}" class="horizontal-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="columnList dropdown">
+                        <label for="{{ operation_form.operation.id_for_label }}">Perfrom Operation:</label>
+                        <button class="dropbtn1"> Select operation </button>
+                        <select class="dropdown-content1" multiple name="{{ operation_form.operation.name }}" >
+                            {% for value, label in operation_form.operation.field.choices %}
+                                {% if value %}  <!-- Exclude the option with an empty value -->
+                                <option value="{{ value }}">{{ label }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>    
+                </div>
+                <div class="form-row">
+                    <div class="columnList dropdown">
+                        <label for="{{ operation_form.column_name.id_for_label }}"> On: </label>
+                        <button class="dropbtn"> Select column </button>
+                        <select class="dropdown-content" multiple name="{{ operation_form.column_name.name }}">
+                            {% for column in operation_form.column_name.field.choices %}
+                                <option value="{{ column.0 }}">{{ column.1 }}</option>
+                            {% endfor %}
+                        </select> 
+                    </div>
+                </div>
+                <button type="submit" class="operationbtn">Perform Operation</button>               
+            </form>
+            
+            
+            
+        </div>
+        
+        <div class="headerdiv2">
+            <a href="{% url 'index' %}">
+                <label for="file-upload" class="button">
+                    <span class="button__text">New</span>
+                    <span class="button__icon">
+                        <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="12" x2="12" y1="5" y2="19"></line>
+                            <line x1="5" x2="19" y1="12" y2="12"></line>
+                        </svg>
+                    </span>    
+                </label>
+            </a>
+        </div>    
+        
+    </div>
+
+    
+           
      <!--Visualization and cleaning button--> 
     <div id="buttons-container" style="display: none;">
             <form method="post" action="{% url 'data_cleaning' %}?file_path={{ file_path }}">
@@ -33,16 +73,16 @@
             </a>
         </div>
         
-    <h1>Data Display</h1>
+    <h3>UPLOADED FILE</h3>
 
     {% if data_list %}
         {% if row_limit %}
             <p>Displaying the first {{ row_limit }} rows</p>
         {% endif %}
-        <div id="scrollableDiv" style="height: 500px; overflow-y: scroll;">
+        <div id="scrollableDiv">
             <!-- Display original data -->
             <table border="1">
-                <thead>
+                <thead style="position: sticky; top: 0; background-color: white;">
                     <tr>
                         <th>Sr.No</th> <!-- Column for row numbers -->
                         {% for column_name in data_list.0.keys %}
@@ -63,27 +103,15 @@
             </table>
         </div>
         
-        
-        <button id="reloadButton">Reload</button>
-        <form method="post" action="{% url 'perform_operation' %}">
-            {% csrf_token %}
-        
-            <label for="{{ operation_form.operation.id_for_label }}">Operation:</label>
-            {{ operation_form.operation }}
-        
-            <label for="{{ operation_form.column_name.id_for_label }}">Columns to Delete:</label>
-            <select multiple name="{{ operation_form.column_name.name }}">
-                {% for column in operation_form.column_name.field.choices %}
-                    <option value="{{ column.0 }}">{{ column.1 }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit">Perform Operation</button>
-        </form>
+        <div class="buttondisplay">
+            <button id="reloadButton" class="reloadButton">Reload</button>
+            
+            <a href="{% url 'data_visualization' %}">
+                <button id="VisualizeButton" class="VisualizeButton">Visualize</button>
+            </a>
+        </div>
 
-        <a href="{% url 'data_visualization' %}">
-            <button>Data Visualization</button>
-        </a>
-     
+        
         
         
                 

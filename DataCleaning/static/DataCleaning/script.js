@@ -150,6 +150,11 @@ function getCookie(name) {
       document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
       uploadButton.innerHTML = `Upload`;
   });
- 
 
+  document.querySelector(".button").addEventListener("click", e => { 
+    gsap.fromTo(".button", {scale: 1}, {scale: 0.75, duration: 0.25, yoyo: true, repeat: 1, overwrite: true});
+  });
+  document.querySelector(".upload-button").addEventListener("click", e => { 
+    gsap.fromTo(".upload-button", {scale: 1}, {scale: 0.75, duration: 0.25, yoyo: true, repeat: 1, overwrite: true});
+  });
 

@@ -5,17 +5,24 @@ body {
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Montserrat', sans-serif;
+	background-color: #EEEEEE;
 }
 .form-container {
 	width: 100vw;
-	height: 100vh;
-	background-color: #7b2cbf;
-	display: flex;
-   	justify-content: center;
-	align-items: center;
+    height: 68vh;
+    background-color: #EEEEEE;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: normal;
+    justify-content: space-evenly;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 9%;
 }
 .upload-files-container {
-	background-color: #f7fff7;
+	background-color: #EEEEEE;
 	width: 420px;
 	padding: 30px 60px;
 	border-radius: 40px;
@@ -25,8 +32,16 @@ body {
 	flex-direction: column;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 10px 20px, rgba(0, 0, 0, 0.28) 0px 6px 6px;
 }
+.upload-files-container:hover, .upload-files-container:focus-within {
+	box-shadow: 0 0 0 2px #005086, 0 10px 60px 0 rgba(0, 0, 0, .1);
+	transform: translatey(-5px);
+  }
+  
+  .upload-files-container:active {
+	transform: scale(0.99) rotateZ(0.3deg);
+  }
 .drag-file-area {
-	border: 2px dashed #7b2cbf;
+	border: 2px dashed #787A91;
 	border-radius: 40px;
 	margin: 10px 0 15px;
 	padding: 30px 50px;
@@ -44,7 +59,7 @@ body {
 	font-size: 19px;
 }
 .drag-file-area label .browse-files-text {
-	color: #7b2cbf;
+	color:#787A91;
 	font-weight: bolder;
 	cursor: pointer;
 }
@@ -79,7 +94,7 @@ body {
 }
 .file-block {
 	color: #f7fff7;
-	background-color: #7b2cbf;
+	background-color: #318FB5;
   	transition: all 1s;
 	width: 390px;
 	position: relative;
@@ -118,7 +133,7 @@ body {
 }
 .upload-button {
 	font-family: 'Montserrat';
-	background-color: #7b2cbf;
+	background-color: #005086;
 	color: #f7fff7;
 	display: flex;
 	align-items: center;
@@ -128,4 +143,31 @@ body {
 	margin: 10px;
 	padding: 7.5px 50px;
 	cursor: pointer;
-}  
+}
+.upload-button:active{
+	background-color: #033250;
+	transform: scale(0.97) rotateZ(0.5deg);
+}
+ 
+.button {
+	font-family: 'Montserrat';
+	background-color:#005086;
+	color: #f7fff7;
+	display: flex;
+	align-items: center;
+	font-size: 18px;
+	border: none;
+	border-radius: 20px;
+	margin: 10px;
+	padding: 7.5px 50px;
+	cursor: pointer;
+	width: 162px;
+	margin-left: 5%;
+}
+.button:active{
+	background-color: #033250;
+	transform: scale(0.97) rotateZ(0.5deg); 
+}
+.button.upload-button:hover {
+	background-color: #023d65; /* Darker green */
+  }   

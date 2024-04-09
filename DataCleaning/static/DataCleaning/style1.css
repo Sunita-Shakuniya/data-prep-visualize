@@ -1,3 +1,12 @@
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+	background-color: #EEEEEE;
+}
+
+
 /* upload button css */
 .button {
   --main-focus: #2d8cf0;
@@ -62,5 +71,239 @@
   transform: translate(3px, 3px);
   box-shadow: 0px 0px var(--main-color);
 }
+.columnList{
+  display: block;
+}
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+
+
+.columnList {
+  position: relative;
+}
+
+.dropbtn {
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+.dropbtn1 {
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content1 {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content option {
+  padding: 8px 12px;
+}
+.dropdown-content1 option {
+  padding: 8px 12px;
+}
+
+
+.dropbtn:hover .dropbtn:active  {
+  background-color: #f1f1f1;
+}
+.dropbtn1:hover .dropbtn1:active {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown:hover .dropdown-content1 {
+  display: block;
+}
+
+
+select {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + 5px);
+  left: 0;
+  width: calc(100% - 2px);
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+select option {
+  padding: 8px 12px;
+}
+
+/* Additional styling for better user experience */
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+.select-operation {
+    position: absolute;
+    opacity: 0; /* Hide the select element */
+    z-index: 1;
+    cursor: pointer;
+}
+
+.dropbtn-operation:hover + select.select-operation {
+    opacity: 1; /* Show the select element when hovering over the button */
+}
 
 /* upload css */
+#scrollableDiv {
+  height: 500px;
+  overflow-y: scroll;
+  /* margin-bottom: 2%; */
+  padding-left: 2%;
+  background: white;
+  border: beige;
+  border-color: #cacaca;
+  border-style: solid;
+  margin-left: 2%;
+  padding-right: 2%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-right: 2%;
+}
+#scrollableDiv:hover{
+  transform: scale(1.01);  
+  box-shadow: 0 0 0 2px #005086, 0 10px 60px 0 rgba(0, 0, 0, .1);
+}
+#reloadButton {
+  font-family: 'Montserrat';
+  background-color: #318FB5;
+  color: #f7fff7;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  border: none;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 6.5px 14px;
+  cursor: pointer;
+  margin-left: 2%;
+  height: 36px;
+}
+#reloadButton:hover {
+  background-color: #005086; /* Darker green */
+  
+}
+.reloadButton:active {
+  transform: scale(0.97) rotateZ(0.5deg); 
+}
+.operationbtn {
+  font-family: 'Montserrat';
+  background-color: #318FB5;
+  color: #f7fff7;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  border: none;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  padding: 7.5px 12px;
+  cursor: pointer;
+  height: 33px;
+  /* width: 132px; */
+  /* margin-top: -5%; */
+}
+.operationbtn:hover {
+  background-color: #005086; /* Darker green */
+}
+.operationbtn:active{
+transform: scale(0.97) rotateZ(0.5deg); 
+}
+.VisualizeButton {
+	font-family: 'Montserrat';
+	background-color: #318FB5;
+	color: #f7fff7;
+	display: flex;
+	align-items: center;
+	font-size: 18px;
+	border: none;
+	border-radius: 20px;
+	margin: 10px;
+	padding: 7.5px 25px;
+	cursor: pointer;
+} 
+.VisualizeButton:hover {
+  background-color: #005086; /* Darker green */
+}
+.VisualizeButton:active {
+  transform: scale(0.97) rotateZ(0.5deg); 
+}
+.headerdiv1{
+  margin: 1%;
+  display: flex;
+}
+
+.headerdiv2{
+  margin-right: 1%;
+  margin-top: 2%;
+}
+
+.headerdiv{
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+.space{
+  margin:1%
+}
+
+.horizontal-form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  
+}
+h3{
+  margin-left: 1%;
+}
+.form-row {
+  margin-right: 20px; /* Adjust spacing between form elements */
+}
+
+.form-row:last-child {
+  margin-right: 0; /* Remove margin from the last form element */
+}
+
+label {
+  margin-right: 10px; /* Adjust spacing between label and input/select */
+}
+
+select {
+  width: 80px; /* Adjust select width if needed */
+}
+
+.operationbtn {
+  margin-left: auto; /* Push the button to the right */
+}
+
+.buttondisplay{
+  display: flex;
+}

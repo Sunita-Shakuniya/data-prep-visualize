@@ -1,0 +1,270 @@
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+	background-color: #eee;
+}
+.plot-container{
+  margin:1%
+}
+/* Custom styling for the cards */
+.card {
+  width: 45%;
+  margin: 10px;
+  padding: 10px;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+  background-color: #FFF;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .15), 1px 5px 6px 0 rgba(0, 0, 0, .15);
+  border-radius: 15px;
+  overflow: hidden;
+  /* padding: 1.25rem; */
+  position: relative;
+  transition: .15s ease-in;
+   
+}
+.card:hover, .card:focus-within {
+  box-shadow: 0 0 0 2px #005086, 0 10px 60px 0 rgba(0, 0, 0, .1);
+  transform: translatey(-5px);
+}
+
+.card:active {
+  transform: scale(0.95) rotateZ(0.5deg);
+}
+
+@media screen and (max-width: 768px) {
+    /* Adjust the width of cards for smaller screens */
+    .card {
+        width: 100%;
+    }
+}
+
+/* Styling for full-screen plot */
+.fullscreen-plot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 9999;
+}
+
+.button {
+    --main-focus: #2d8cf0;
+    --font-color: #323232;
+    --bg-color-sub: #dedede;
+    --bg-color: #eee;
+    --main-color: #323232;
+    position: relative;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--main-color);
+    box-shadow: 4px 4px var(--main-color);
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  
+  .button, .button .button__icon, .button .button__text {
+    transition: all 0.3s;
+  }
+  
+  .button .button__text {
+    transform: translateX(22px);
+    color: var(--font-color);
+    font-weight: 600;
+  }
+  
+  .button .button__icon {
+    position: absolute;
+    transform: translateX(109px);
+    height: 100%;
+    width: 39px;
+    background-color: var(--bg-color-sub);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .button .svg {
+    width: 20px;
+    fill: var(--main-color);
+  }
+  
+  .button:hover {
+    background: var(--bg-color);
+  }
+  
+  .button:hover .button__text {
+    color: transparent;
+  }
+  
+  .button:hover .button__icon {
+    width: 148px;
+    transform: translateX(0);
+  }
+  
+  .button:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px var(--main-color);
+  }
+/*upload button*/  
+.comcontainer{
+    margin: 0%;
+
+}
+ul {
+  list-style-type: none; /* Remove marker */
+  padding: 5%;
+}
+.combination{
+    display: block;
+    background-color: rgb(0 70 173 / 3%);
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, .15), 1px 2px 1px 0 rgba(0, 0, 0, .15);
+    border-radius: 20px;
+    overflow: auto;
+    max-height: 350px;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 70%;
+    margin-top: 3%;
+
+}
+
+.combination:hover{
+  transform: scale(1.01);  
+  box-shadow: 0 0 0 2px #005086, 0 10px 60px 0 rgba(0, 0, 0, .1);
+  }
+/* Hide the scrollbar */
+.combination::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar in WebKit browsers (Chrome, Safari) */
+}
+
+/* Optional: If you want to hide the scrollbar in Firefox */
+.combination {
+  scrollbar-width: none; /* Hide the scrollbar in Firefox */
+}
+
+.homebtn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px; 
+}
+.combination1{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1%;
+    
+}
+.combination2{
+    margin: 3%;
+    padding: 1%;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    border-radius: 0.5rem;
+    width: 42%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+}
+.combination2:hover{
+  transform: scale(1.03);  
+  }
+
+.Visualize {
+	font-family: 'Montserrat';
+  background-color: #318FB5;
+  color: #f7fff7;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  border: none;
+  border-radius: 20px;
+  margin: 2%;
+  padding: 9.5px 12px;
+  cursor: pointer;
+  height: 33px;
+  margin-left: 10%;
+}
+
+.Visualize:hover{
+  background-color: #005086;
+}
+.Visualize:active{
+  transform: scale(0.97) rotateZ(0.5deg); 
+}
+
+h4, h5{
+  display: flex;
+  justify-content: center;
+}
+.showbtn {
+	font-family: 'Montserrat';
+  background-color: #318FB5;
+  color: #f7fff7;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  border: none;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 9.5px 12px;
+  cursor: pointer;
+  height: 33px;
+}
+.showbtn:hover {
+  background-color: #005086; /* Darker green */
+}
+.showbtn:active{
+  transform: scale(0.97) rotateZ(0.5deg); 
+}
+
+
+
+
+.plot_display{
+  background-color: #eee;
+  padding-bottom:2%;
+}
+.clbutton {
+	font-family: 'Montserrat';
+	background-color: #318FB5;
+	color: #f7fff7;
+	display: flex;
+	align-items: center;
+	font-size: 18px;
+	border: none;
+	border-radius: 20px;
+	margin: 10px;
+	padding: 7.5px 25px;
+	cursor: pointer;
+}  
+
+.clbutton:hover {
+  background-color: #005086; /* Darker green */
+}
+.clbutton:active {
+  transform: scale(0.97) rotateZ(0.5deg); 
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    background-color: white;
+    padding-bottom: 1.5%;
+}
+.hideButton{
+  display: none;
+}
