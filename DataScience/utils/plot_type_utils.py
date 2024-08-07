@@ -23,8 +23,8 @@ def suggest_plot(combination, data):
             return 'heatmap'
         elif ((x_dtype == 'int64' or x_dtype == 'object')and y_dtype == 'datetime64') or (x_dtype == 'datetime64' and (y_dtype == 'int64' or y_dtype == 'object'))or (x_dtype == 'datetime64' and y_dtype == 'category'):
             return 'line plot' # all posible combination
-        elif (x_dtype == 'bool' and y_dtype == 'bool') or (x_dtype == 'category' and y_dtype == 'category'):
-            return 'stacked bar plot' # all posible combination
+        #elif (x_dtype == 'bool' and y_dtype == 'bool') or (x_dtype == 'category' and y_dtype == 'category'):
+        #    return 'stacked bar plot' # all posible combination
         elif (x_dtype == 'category' and y_dtype == 'float64'):
             return 'strip' # all posible combination
         elif (x_dtype == 'float64' and y_dtype == 'datetime64') or (x_dtype == 'int64' and y_dtype == 'datetime64'):
@@ -50,8 +50,8 @@ def suggest_plot(combination, data):
             return '3d line plot'  # all possible combination
         elif x_dtype == 'int64' and y_dtype == 'datetime64' and z_dtype == 'bool':
             return '3d scatter plot with time series and boolean coloring' #all possible combination
-        elif (x_dtype == 'int64' and y_dtype == 'int64' and z_dtype == 'object') or (x_dtype == 'float64' and y_dtype == 'object' and z_dtype == 'int64') or (x_dtype == 'float64' and y_dtype == 'object' and z_dtype == 'float64') or (x_dtype == 'float64' and y_dtype == 'object' and z_dtype == 'object'):
-            return '3d stacked bar plot' # possible combination
+        #elif (x_dtype == 'int64' and y_dtype == 'int64' and z_dtype == 'object') or (x_dtype == 'float64' and y_dtype == 'object' and z_dtype == 'int64') or (x_dtype == 'float64' and y_dtype == 'object' and z_dtype == 'float64') or (x_dtype == 'float64' and y_dtype == 'object' and z_dtype == 'object'):
+        #    return '3d stacked bar plot' # possible combination
         elif (x_dtype == 'int64' and y_dtype == 'float64' and z_dtype == 'int64') or (x_dtype == 'int64' and y_dtype == 'float64' and z_dtype == 'float64') or (x_dtype == 'int64' and y_dtype == 'object' and z_dtype == 'float64') or (x_dtype == 'float64' and y_dtype == 'int64' and z_dtype == 'int64') or (x_dtype == 'float64' and y_dtype == 'int64' and z_dtype == 'float64') or (x_dtype == 'float64' and y_dtype == 'int64' and z_dtype == 'object')  :
             return '3d surface plot'
         elif (x_dtype == 'int64' and y_dtype == 'int64' and z_dtype == 'bool') or (x_dtype == 'int64' and y_dtype == 'float64' and z_dtype == 'bool') or (x_dtype == 'int64' and y_dtype == 'object' and z_dtype == 'bool'):     
