@@ -1,3 +1,3 @@
-﻿# Say Hii..
- To,
- My first django Application
+﻿# Django Data Narrative: Crafting Visual Stories
+
+
