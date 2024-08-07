@@ -12,7 +12,7 @@
 
 Key Features
   <ul style="list-style-type: square;">
-<li>>Upload and Clean Data: Easily upload your XML or CSV datasets and perform necessary cleaning operations.</li
+<li>Upload and Clean Data: Easily upload your XML or CSV datasets and perform necessary cleaning operations.</li>
 <li>Automated Plot Selection: Visualize data with the most suitable 2D and 3D plots automatically selected based on the data characteristics.</li>
 <li>Comprehensive Visualization: Explore every possible combination of your data to uncover meaningful insights and opportunities.</li>
   </ul>    
