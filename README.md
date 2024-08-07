@@ -3,6 +3,6 @@
 </p>
 
   
-# <span style="color: #5D3FD3; ">Django Data Narrative: Crafting Visual Stories</span>
+# <span style="color: #5D3FD3; ">Data Narrative: Crafting Visual Stories</span>
 
 
