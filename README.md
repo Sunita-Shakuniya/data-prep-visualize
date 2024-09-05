@@ -24,3 +24,22 @@
 <li>Pandas: For efficient data manipulation and cleaning.</li>
 <li>Numpy: For numerical operations and data processing.</li>
  </ul>
+
+## Project Demo
+
+Check out the demo video showcasing the features and usage of our tool!
+
+### Screenshots:
+![Step 1](https://github.com/Sunita-Shakuniya/data/blob/main/Screenshot%202024-07-13%20175846.png?raw=true)
+![Step 2](https://github.com/Sunita-Shakuniya/data/blob/main/Screenshot%202024-07-13%20180134.png?raw=true)
+![Step 3](https://github.com/Sunita-Shakuniya/data/blob/main/Screenshot%202024-07-13%20182047.png?raw=true)
+![Step 4](https://github.com/Sunita-Shakuniya/data/blob/main/Screenshot%202024-07-13%20182244.png?raw=true)
+![Step 5](https://github.com/Sunita-Shakuniya/data/blob/main/Screenshot%202024-07-13%20182522.png?raw=true)
+![Step 5](https://github.com/Sunita-Shakuniya/data/blob/main/Screenshot%202024-07-13%20182219.png?raw=true)
+
+
+<p align="center">
+  <a href="" target="_blank">
+     Watch the Demo Video
+  </a>
+</p>
