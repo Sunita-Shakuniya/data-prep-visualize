@@ -39,7 +39,7 @@ Check out the demo video showcasing the features and usage of our tool!
 
 
 <p align="center">
-  <a href="" target="_blank">
+  <a href="https://youtu.be/6Pqy3ckv-uQ" target="_blank">
      Watch the Demo Video
   </a>
 </p>
